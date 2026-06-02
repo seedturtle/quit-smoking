@@ -1,0 +1,10 @@
+{
+  "name": "quit-smoking",
+  "version": "1.0.0",
+  "description": "戒菸資訊互動網頁 — 戒菸資源、健康知識、戒菸服務連結",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "license": "MIT"
+}

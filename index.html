@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>戒菸吧 — 重新開始的勇氣</title>
+  <style>
+    /* ========== Reset & base ========== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif;
+      color: #1a1a2e; line-height: 1.7; background: #f8f9fa;
+    }
+
+    /* ========== Utility ========== */
+    .container { max-width: 960px; margin: 0 auto; padding: 0 20px; }
+    .section { padding: 80px 0; }
+    .text-center { text-align: center; }
+    .mb-2 { margin-bottom: 20px; }
+    .mb-4 { margin-bottom: 40px; }
+    .fade-in { animation: fadeIn 0.6s ease both; }
+
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* ========== Hero ========== */
+    .hero {
+      background: linear-gradient(135deg, #0b5e42 0%, #1a8a5c 50%, #219a6a 100%);
+      color: #fff; padding: 100px 0 80px; position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+      background: radial-gradient(circle at 30% 50%, rgba(255,255,255,0.05) 0%, transparent 60%);
+    }
+    .hero h1 {
+      font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 800;
+      position: relative; letter-spacing: 0.02em;
+    }
+    .hero h1 span { display: block; font-size: clamp(1rem, 2.5vw, 1.4rem); font-weight: 400; margin-top: 12px; opacity: 0.9; }
+    .hero .subtitle {
+      font-size: clamp(1rem, 2vw, 1.2rem); margin-top: 24px; opacity: 0.85;
+      position: relative;
+    }
+    .hero-stats {
+      display: flex; gap: 40px; justify-content: center; margin-top: 48px;
+      flex-wrap: wrap; position: relative;
+    }
+    .hero-stat { text-align: center; }
+    .hero-stat .num { font-size: 2rem; font-weight: 800; }
+    .hero-stat .label { font-size: 0.85rem; opacity: 0.75; margin-top: 4px; }
+
+    /* ========== Section headings ========== */
+    .section-title {
+      font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 700; margin-bottom: 16px;
+      color: #0b5e42;
+    }
+    .section-desc { font-size: 1rem; color: #555; max-width: 640px; margin: 0 auto 48px; }
+
+    /* ========== Timeline ========== */
+    .timeline { position: relative; padding-left: 40px; }
+    .timeline::before {
+      content: ''; position: absolute; left: 15px; top: 0; bottom: 0;
+      width: 3px; background: linear-gradient(to bottom, #0b5e42, #4ecdc4);
+      border-radius: 3px;
+    }
+    .timeline-item {
+      position: relative; margin-bottom: 32px; padding: 20px 24px;
+      background: #fff; border-radius: 12px; box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+      transition: transform 0.3s, box-shadow 0.3s; cursor: default;
+    }
+    .timeline-item:hover { transform: translateX(4px); box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
+    .timeline-item .dot {
+      position: absolute; left: -33px; top: 24px; width: 20px; height: 20px;
+      border-radius: 50%; background: #0b5e42; border: 3px solid #fff;
+      box-shadow: 0 0 0 3px #0b5e42;
+    }
+    .timeline-item .time { font-size: 0.85rem; font-weight: 700; color: #0b5e42; margin-bottom: 4px; }
+    .timeline-item h3 { font-size: 1.05rem; margin-bottom: 6px; }
+    .timeline-item p { font-size: 0.9rem; color: #555; }
+
+    /* ========== Calculator ========== */
+    .calc-card {
+      background: linear-gradient(135deg, #fff 0%, #f0fdf4 100%);
+      border-radius: 16px; padding: 32px; box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+      max-width: 520px; margin: 0 auto;
+    }
+    .calc-card label { display: block; font-weight: 600; margin-bottom: 8px; color: #333; }
+    .calc-card input {
+      width: 100%; padding: 12px 16px; border: 2px solid #e0e0e0;
+      border-radius: 10px; font-size: 1rem; transition: border-color 0.3s;
+      margin-bottom: 20px;
+    }
+    .calc-card input:focus { outline: none; border-color: #0b5e42; }
+    .calc-results {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 8px;
+    }
+    .calc-result {
+      background: #fff; border-radius: 12px; padding: 16px; text-align: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    }
+    .calc-result .amount { font-size: 1.4rem; font-weight: 800; color: #0b5e42; }
+    .calc-result .period { font-size: 0.8rem; color: #888; margin-top: 4px; }
+
+    /* ========== Service cards ========== */
+    .service-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px; margin-top: 8px;
+    }
+    .service-card {
+      background: #fff; border-radius: 14px; padding: 28px 24px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+      transition: transform 0.3s, box-shadow 0.3s;
+      text-decoration: none; color: inherit; display: block;
+      border: 2px solid transparent;
+    }
+    .service-card:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(0,0,0,0.1); border-color: #0b5e42; }
+    .service-card .icon { font-size: 2rem; margin-bottom: 12px; }
+    .service-card h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 8px; }
+    .service-card p { font-size: 0.85rem; color: #666; }
+    .service-card .phone { font-size: 1.1rem; font-weight: 700; color: #0b5e42; margin-top: 10px; }
+
+    /* ========== Methods ========== */
+    .method-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 20px;
+    }
+    .method-card {
+      background: #fff; border-radius: 14px; padding: 28px 24px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06); text-align: center;
+    }
+    .method-card .emoji { font-size: 2.2rem; margin-bottom: 12px; }
+    .method-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 8px; }
+    .method-card p { font-size: 0.85rem; color: #666; }
+
+    /* ========== Footer ========== */
+    footer {
+      background: #0b5e42; color: rgba(255,255,255,0.7); padding: 40px 0;
+      text-align: center; font-size: 0.85rem;
+    }
+    footer strong { color: #fff; }
+
+    /* ========== Responsive ========== */
+    @media (max-width: 600px) {
+      .hero { padding: 60px 0 48px; }
+      .section { padding: 48px 0; }
+      .timeline { padding-left: 32px; }
+      .calc-results { grid-template-columns: 1fr; }
+      .hero-stats { gap: 20px; }
+      .hero-stat .num { font-size: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ========== HERO ========== -->
+<section class="hero">
+  <div class="container text-center">
+    <h1 class="fade-in">
+      戒菸吧
+      <span>重新開始，永遠不嫌晚 🍃</span>
+    </h1>
+    <p class="subtitle fade-in" style="animation-delay:0.2s">
+      每放下一次菸，都是對未來更好的選擇。<br>
+      台灣每年超過 2.7 萬人因菸害失去生命，但戒菸後的每一分鐘，身體都在修復。
+    </p>
+    <div class="hero-stats fade-in" style="animation-delay:0.4s">
+      <div class="hero-stat">
+        <div class="num">8.5 <small>年</small></div>
+        <div class="label">戒菸後平均多活</div>
+      </div>
+      <div class="hero-stat">
+        <div class="num">20 <small>分鐘</small></div>
+        <div class="label">血壓心跳恢復正常</div>
+      </div>
+      <div class="hero-stat">
+        <div class="num">1 <small>年</small></div>
+        <div class="label">心臟病風險降 50%</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== BENEFITS TIMELINE ========== -->
+<section class="section" id="benefits" style="background:#fff;">
+  <div class="container">
+    <h2 class="section-title text-center">戒菸後的身體變化</h2>
+    <p class="section-desc text-center">從放下菸的那一刻開始，你的身體就會啟動修復機制。</p>
+    <div class="timeline">
+      <div class="timeline-item fade-in">
+        <div class="dot"></div>
+        <div class="time">20 分鐘後</div>
+        <h3>血壓與心跳恢復正常</h3>
+        <p>心跳速率和血壓開始下降，手腳末梢血液循環改善，體溫恢復正常。</p>
+      </div>
+      <div class="timeline-item fade-in" style="animation-delay:0.1s">
+        <div class="dot"></div>
+        <div class="time">8 小時後</div>
+        <h3>血液一氧化碳濃度減半</h3>
+        <p>血液中的一氧化碳濃度下降，氧氣輸送能力恢復正常</p>
+      </div>
+      <div class="timeline-item fade-in" style="animation-delay:0.2s">
+        <div class="dot"></div>
+        <div class="time">24 小時後</div>
+        <h3>心臟病發作風險開始下降</h3>
+        <p>心臟病發作的風險開始降低，戒菸滿一天就能感受到改變。</p>
+      </div>
+      <div class="timeline-item fade-in" style="animation-delay:0.3s">
+        <div class="dot"></div>
+        <div class="time">48 小時後</div>
+        <h3>嗅覺與味覺開始恢復</h3>
+        <p>神經末梢開始重新生長，嗅覺和味覺逐漸變得敏銳。</p>
+      </div>
+      <div class="timeline-item fade-in" style="animation-delay:0.4s">
+        <div class="dot"></div>
+        <div class="time">2 週 ∼ 3 個月</div>
+        <h3>血液循環大幅改善</h3>
+        <p>血液循環明顯改善，肺部功能逐步恢復，走路更輕鬆。</p>
+      </div>
+      <div class="timeline-item fade-in" style="animation-delay:0.5s">
+        <div class="dot"></div>
+        <div class="time">1 ∼ 9 個月</div>
+        <h3>咳嗽與氣喘明顯減少</h3>
+        <p>肺部纖毛重新生長，清除肺部黏液的能力恢復，呼吸道感染減少。</p>
+      </div>
+      <div class="timeline-item fade-in" style="animation-delay:0.6s">
+        <div class="dot"></div>
+        <div class="time">1 年後</div>
+        <h3>心臟病風險降低 50%</h3>
+        <p>冠狀動脈心臟病的風險降到吸菸者的一半。</p>
+      </div>
+      <div class="timeline-item fade-in" style="animation-delay:0.7s">
+        <div class="dot"></div>
+        <div class="time">5 年後</div>
+        <h3>口腔癌、食道癌風險減半</h3>
+        <p>口腔癌、咽喉癌、食道癌的風險降低約 50%。</p>
+      </div>
+      <div class="timeline-item fade-in" style="animation-delay:0.8s">
+        <div class="dot"></div>
+        <div class="time">10 年後</div>
+        <h3>肺癌風險降低 50%</h3>
+        <p>肺癌的死亡率降到吸菸者的一半，罹癌風險持續下降。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== COST CALCULATOR ========== -->
+<section class="section" id="calculator" style="background:#f0fdf4;">
+  <div class="container">
+    <h2 class="section-title text-center">戒菸省多少？</h2>
+    <p class="section-desc text-center">算算看你今天開始戒菸，能省下多少錢、找回多少健康。</p>
+    <div class="calc-card fade-in">
+      <label for="cigarettes">每天吸幾根菸？</label>
+      <input type="range" id="cigarettes" min="1" max="60" value="10" oninput="updateCalc()">
+      <div style="display:flex;justify-content:space-between;font-size:0.85rem;color:#888;margin-top:-12px;margin-bottom:20px;">
+        <span id="cigarettesDisplay">10 根/天</span>
+      </div>
+
+      <label for="price">每包菸價格（元）</label>
+      <input type="range" id="price" min="90" max="200" value="140" step="5" oninput="updateCalc()">
+      <div style="display:flex;justify-content:space-between;font-size:0.85rem;color:#888;margin-top:-12px;margin-bottom:20px;">
+        <span id="priceDisplay">140 元/包</span>
+      </div>
+
+      <div class="calc-results">
+        <div class="calc-result">
+          <div class="amount" id="dailyCost">70</div>
+          <div class="period">每天省下（元）</div>
+        </div>
+        <div class="calc-result">
+          <div class="amount" id="monthlyCost">2,100</div>
+          <div class="period">每月省下（元）</div>
+        </div>
+        <div class="calc-result">
+          <div class="amount" id="yearlyCost">25,550</div>
+          <div class="period">每年省下（元）</div>
+        </div>
+        <div class="calc-result">
+          <div class="amount" id="tenYearCost">255,500</div>
+          <div class="period">十年省下（元）</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== SERVICES ========== -->
+<section class="section" id="services" style="background:#fff;">
+  <div class="container">
+    <h2 class="section-title text-center">戒菸服務資源</h2>
+    <p class="section-desc text-center">專業的戒菸服務就在你身邊，不需要一個人面對。</p>
+    <div class="service-grid">
+      <a class="service-card" href="https://ttc.hpa.gov.tw/" target="_blank" rel="noopener">
+        <div class="icon">🏥</div>
+        <h3>國民健康署<br>二代戒菸服務</h3>
+        <p>全台超過 4,000 家合約醫療機構提供戒菸門診，補助戒菸藥物與衛教諮詢。</p>
+      </a>
+
+      <a class="service-card" href="https://www.tsh.org.tw/" target="_blank" rel="noopener">
+        <div class="icon">📞</div>
+        <h3>戒菸專線服務中心</h3>
+        <p>免費、隱密、一對一的戒菸諮詢，由專業人員陪你擬定戒菸計畫。</p>
+        <div class="phone">0800-636363</div>
+      </a>
+
+      <a class="service-card" href="https://ttc.hpa.gov.tw/Web/SearchForClinic" target="_blank" rel="noopener">
+        <div class="icon">📍</div>
+        <h3>戒菸合約機構查詢</h3>
+        <p>查詢離你最近的戒菸門診與合約藥局，即早開始戒菸療程。</p>
+      </a>
+
+      <a class="service-card" href="https://health99.hpa.gov.tw/" target="_blank" rel="noopener">
+        <div class="icon">📱</div>
+        <h3>健康九九戒菸資源</h3>
+        <p>衛福部國民健康署官方健康促進平台，提供戒菸衛教資訊與影音資源。</p>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ========== METHODS ========== -->
+<section class="section" id="methods" style="background:#f8f9fa;">
+  <div class="container">
+    <h2 class="section-title text-center">戒菸方法建議</h2>
+    <p class="section-desc text-center">找到最適合你的方法，戒菸成功率會大幅提升。</p>
+    <div class="method-grid">
+      <div class="method-card">
+        <div class="emoji">💊</div>
+        <h3>藥物治療</h3>
+        <p>尼古丁替代療法（貼片、嚼錠、吸入劑）與口服戒菸藥物，可有效減輕戒斷症狀，成功率提高 2-3 倍。</p>
+      </div>
+      <div class="method-card">
+        <div class="emoji">🗣️</div>
+        <h3>諮商輔導</h3>
+        <p>戒菸專線或門診衛教提供個人化諮商，幫助你建立戒菸策略與因應菸癮的技巧。</p>
+      </div>
+      <div class="method-card">
+        <div class="emoji">💪</div>
+        <h3>自我管理</h3>
+        <p>設定戒菸日期、記錄吸菸觸發因子、尋找替代行為（運動、咀嚼無糖口香糖）。逐步減少法也是有效策略。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== QUOTE ========== -->
+<section class="section" style="background:#0b5e42; color:#fff;">
+  <div class="container text-center">
+    <blockquote style="font-size:clamp(1.1rem,2.5vw,1.4rem); font-style:italic; line-height:1.8; max-width:600px; margin:0 auto;">
+      「戒菸不是失去什麼，而是找回健康、尊嚴與自由的開始。」
+    </blockquote>
+    <p style="margin-top:24px; opacity:0.7; font-size:0.9rem;">— 衛生福利部 國民健康署</p>
+  </div>
+</section>
+
+<!-- ========== FOOTER ========== -->
+<footer>
+  <div class="container">
+    <p>本網站內容僅供衛教參考，戒菸相關問題請諮詢醫療專業人員。</p>
+    <p style="margin-top:8px;">戒菸專線：<strong>0800-636363</strong> · 服務時間：每日 9:00 - 21:00</p>
+    <p style="margin-top:16px; opacity:0.5;">© 2026 戒菸吧 — 重新開始的勇氣</p>
+  </div>
+</footer>
+
+<!-- ========== SCRIPT ========== -->
+<script>
+function updateCalc() {
+  const cigs = parseInt(document.getElementById('cigarettes').value);
+  const price = parseInt(document.getElementById('price').value);
+
+  document.getElementById('cigarettesDisplay').textContent = cigs + ' 根/天';
+  document.getElementById('priceDisplay').textContent = price + ' 元/包';
+
+  const perCig = price / 20;
+  const daily = cigs * perCig;
+  const monthly = daily * 30;
+  const yearly = daily * 365;
+  const tenYear = yearly * 10;
+
+  document.getElementById('dailyCost').textContent = Math.round(daily).toLocaleString();
+  document.getElementById('monthlyCost').textContent = Math.round(monthly).toLocaleString();
+  document.getElementById('yearlyCost').textContent = Math.round(yearly).toLocaleString();
+  document.getElementById('tenYearCost').textContent = Math.round(tenYear).toLocaleString();
+}
+
+// Intersection Observer for scroll animations
+document.addEventListener('DOMContentLoaded', () => {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.opacity = '1';
+        entry.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.15 });
+
+  document.querySelectorAll('.timeline-item, .service-card, .method-card').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(20px)';
+    el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+    observer.observe(el);
+  });
+
+  initBg();
+});
+
+function initBg() {
+  // Add subtle background pattern to select sections
+  const calcSection = document.querySelector('#calculator');
+  if (calcSection) {
+    calcSection.style.backgroundImage = 'radial-gradient(circle at 10% 20%, rgba(11,94,66,0.03) 0%, transparent 50%)';
+  }
+}
+</script>
+</body>
+</html>
