@@ -119,6 +119,45 @@
     .service-card p { font-size: 0.85rem; color: #666; }
     .service-card .phone { font-size: 1.1rem; font-weight: 700; color: #0b5e42; margin-top: 10px; }
 
+    /* ========== Hospital section ========== */
+    .hospital-card {
+      background: linear-gradient(135deg, #e8f5e9 0%, #f1f8e9 100%);
+      border-radius: 16px; padding: 36px 32px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+      border: 2px solid #a5d6a7;
+    }
+    .hospital-card .h-name {
+      font-size: 1.2rem; font-weight: 800; color: #0b5e42; margin-bottom: 4px;
+    }
+    .hospital-card .h-sub {
+      font-size: 0.9rem; color: #388e3c; margin-bottom: 16px;
+    }
+    .hospital-card .h-highlights {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px; margin-bottom: 20px;
+    }
+    .hospital-card .h-item {
+      background: #fff; border-radius: 10px; padding: 14px 16px;
+      text-align: center;
+    }
+    .hospital-card .h-item .val {
+      font-size: 1.3rem; font-weight: 800; color: #0b5e42;
+    }
+    .hospital-card .h-item .lab {
+      font-size: 0.8rem; color: #666; margin-top: 2px;
+    }
+    .hospital-card .h-desc {
+      font-size: 0.9rem; color: #444; line-height: 1.8; margin-bottom: 16px;
+    }
+    .hospital-card .h-phone {
+      display: inline-block; background: #0b5e42; color: #fff;
+      padding: 12px 24px; border-radius: 10px;
+      font-size: 1.2rem; font-weight: 700; text-decoration: none;
+      transition: background 0.3s;
+    }
+    .hospital-card .h-phone:hover { background: #1a8a5c; }
+    .hospital-card .h-phone small { font-weight: 400; font-size: 0.8rem; opacity: 0.8; }
+
     /* ========== Methods ========== */
     .method-grid {
       display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -284,6 +323,96 @@
   </div>
 </section>
 
+<!-- ========== MEDICATION GUIDE ========== -->
+<section class="section" id="medication-guide" style="background:#fff;">
+  <div class="container">
+    <h2 class="section-title text-center">戒菸藥品選擇指南 💊</h2>
+    <p class="section-desc text-center">本院提供以下戒菸藥物，根據你的抽菸習慣建議最適合的選擇。</p>
+
+    <div class="guide-card fade-in">
+      <div class="guide-form">
+        <div class="guide-row">
+          <label for="guideCigs">每天吸幾根菸？</label>
+          <input type="range" id="guideCigs" min="1" max="60" value="15" oninput="updateGuide()">
+          <div class="guide-range-labels">
+            <span id="guideCigsDisplay">15 根/天</span>
+          </div>
+        </div>
+        <div class="guide-row">
+          <label>起床後多久吸第一根菸？</label>
+          <div class="guide-options" id="firstCigOptions">
+            <label class="guide-option" data-value="5">
+              <input type="radio" name="firstCig" value="5" onchange="updateGuide()">
+              <span>5 分鐘內</span>
+            </label>
+            <label class="guide-option" data-value="30">
+              <input type="radio" name="firstCig" value="30" onchange="updateGuide()" checked>
+              <span>6–30 分鐘</span>
+            </label>
+            <label class="guide-option" data-value="60">
+              <input type="radio" name="firstCig" value="60" onchange="updateGuide()">
+              <span>31–60 分鐘</span>
+            </label>
+            <label class="guide-option" data-value="120">
+              <input type="radio" name="firstCig" value="120" onchange="updateGuide()">
+              <span>超過 60 分鐘</span>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div class="guide-result" id="guideResult">
+        <div class="guide-badge" id="guideLevel">中重度依賴</div>
+        <h3>建議用藥</h3>
+        <div class="guide-recs" id="guideRecs">
+          <div class="rec-item primary">
+            <span class="rec-tag">首選</span>
+            <strong>尼古丁貼片 20mg</strong>
+            <span class="rec-note">每日一片，貼於皮膚，24小時持續釋放</span>
+          </div>
+          <div class="rec-item alt">
+            <span class="rec-tag">替代</span>
+            <strong>尼古丁口香糖 4mg</strong>
+            <span class="rec-note">每1-2小時嚼1顆，菸癮來時使用</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <h3 style="margin-top:48px; margin-bottom:24px; text-align:center; font-size:1.1rem; color:#0b5e42;">本院提供藥品一覽</h3>
+    <div class="med-grid">
+      <div class="med-card">
+        <div class="med-icon">🩹</div>
+        <h4>尼古丁貼片 20mg</h4>
+        <p class="med-desc">持續 24 小時釋放尼古丁，穩定控制戒斷症狀。適合每天 10–20 根的中度依賴者。</p>
+        <div class="med-detail"><strong>用法：</strong>每日一次，貼於上半身清潔乾燥皮膚，24 小時後更換位置。</div>
+        <div class="med-detail"><strong>優點：</strong>方便、隱密、一天只需一次</div>
+      </div>
+      <div class="med-card">
+        <div class="med-icon">🩹</div>
+        <h4>尼古丁貼片 35mg</h4>
+        <p class="med-desc">高劑量尼古丁貼片，適合每天 20 根以上的高度依賴者，或 20mg 貼片效果不足時使用。</p>
+        <div class="med-detail"><strong>用法：</strong>每日一次，貼於上半身清潔乾燥皮膚，24 小時後更換位置。</div>
+        <div class="med-detail"><strong>優點：</strong>單一貼片高劑量，效果穩定</div>
+      </div>
+      <div class="med-card">
+        <div class="med-icon">🍬</div>
+        <h4>尼古丁口香糖</h4>
+        <p class="med-desc">2mg（輕度）／4mg（中重度）。菸癮來時即時緩解，可靈活調整用量。</p>
+        <div class="med-detail"><strong>用法：</strong>慢慢嚼至產生味道後，含於臉頰內側吸收，重複咀嚼－含住。每 1–2 小時 1 顆。</div>
+        <div class="med-detail"><strong>優點：</strong>可靈活使用、即時緩解突發菸癮</div>
+      </div>
+      <div class="med-card">
+        <div class="med-icon">💊</div>
+        <h4>尼古丁口溶錠</h4>
+        <p class="med-desc">2mg（輕度）／4mg（中重度）。在口中溶解吸收，適合不喜歡咀嚼的使用者。</p>
+        <div class="med-detail"><strong>用法：</strong>放入口中溶解約 20–30 分鐘，不要咀嚼或吞下。每 1–2 小時 1 顆。</div>
+        <div class="med-detail"><strong>優點：</strong>使用隱密、無需咀嚼、口感佳</div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ========== SERVICES ========== -->
 <section class="section" id="services" style="background:#fff;">
   <div class="container">
@@ -314,6 +443,50 @@
         <h3>健康九九戒菸資源</h3>
         <p>衛福部國民健康署官方健康促進平台，提供戒菸衛教資訊與影音資源。</p>
       </a>
+    </div>
+  </div>
+</section>
+
+<!-- ========== MCH HOSPITAL ========== -->
+<section class="section" id="mch" style="background:#f1f8e9;">
+  <div class="container">
+    <h2 class="section-title text-center" style="color:#1b5e20;">門諾醫院戒菸服務</h2>
+    <p class="section-desc text-center">花蓮鄉親的戒菸好夥伴 — 免掛號費、藥費補助、專人協助。</p>
+    <div class="hospital-card fade-in">
+      <div class="h-name">🏥 門諾醫院戒菸門診</div>
+      <div class="h-sub">家醫科門診均可提供戒菸諮詢與藥物治療</div>
+      <div class="h-highlights">
+        <div class="h-item">
+          <div class="val">0 元</div>
+          <div class="lab">免掛號費・免部分負擔</div>
+        </div>
+        <div class="h-item">
+          <div class="val">≤ 200 元</div>
+          <div class="lab">藥費自付額上限</div>
+        </div>
+        <div class="h-item">
+          <div class="val">45–51%</div>
+          <div class="lab">三個月戒菸成功率</div>
+        </div>
+        <div class="h-item">
+          <div class="val">2 次/年</div>
+          <div class="lab">每年戒菸療程次數</div>
+        </div>
+      </div>
+      <div class="h-desc">
+        <strong>藥物選擇：</strong>醫師依尼古丁成癮程度評估，提供口服戒菸藥、尼古丁貼片、尼古丁口嚼錠等。<br>
+        <strong>補助說明：</strong>依國健署二代戒菸政策，戒菸藥物由政府補助，民眾自付額上限約 <strong>200 元</strong>，門諾另免掛號費與基本部分負擔。<br>
+        <strong>療程規定：</strong>每人每年 2 次戒菸療程，每次約 8 週，需在同一醫療院所 90 天內完成。住院期間也可由病房護理師轉介參加門診戒菸計畫。<br>
+        <strong>專人協助：</strong>有專責戒菸個案管理師協助安排門診與追蹤，院內多位醫師具戒菸門診資格，搭配衛教與心理支持，大幅提高成功率。
+      </div>
+      <div class="text-center">
+        <a class="h-phone" href="tel:038241431">
+          📞 03-824-1431 <small>戒菸專線．預約諮詢</small>
+        </a>
+      </div>
+      <p style="margin-top:16px; font-size:0.8rem; color:#888; text-align:center;">
+        企業或團體也可洽談戒菸班，歡迎來電詢問。
+      </p>
     </div>
   </div>
 </section>
